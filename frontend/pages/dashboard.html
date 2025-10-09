@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <title>Dashboard - RID BHARAT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel='stylesheet' href='/css/dashboard.css'>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="container page">
+    <aside class="sidebar-left">
+      <div class="brand"><a href="/"><i class="fas fa-graduation-cap"></i> RID BHARAT</a></div>
+      <ul>
+        <li><a href="/index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#" onclick="showSection('overview')"><i class="fas fa-chart-pie"></i> Overview</a></li>
+        <li><a href="#" onclick="showSection('my-courses')"><i class="fas fa-book-open"></i> My Courses</a></li>
+        <li><a href="#" onclick="showSection('progress')"><i class="fas fa-chart-line"></i> Progress</a></li>
+        <li><a href="#" onclick="showSection('resources')"><i class="fas fa-file-alt"></i> Resources</a></li>
+        <li><a href="#" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
+      </ul>
+    </aside>
+    <main class="main-col">
+      <h1>Your Dashboard</h1>
+      
+      <!-- Overview Section -->
+      <div id="overview" class="dashboard-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3 id="total-courses">0</h3>
+            <p>Total Courses</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="completed-courses">0</h3>
+            <p>Completed</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="in-progress">0</h3>
+            <p>In Progress</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="study-time">0h</h3>
+            <p>Study Time</p>
+          </div>
+        </div>
+        
+        <div class="section-title">
+          <h2>Recent Activity</h2>
+          <a href="#" onclick="showSection('progress')">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div id="recent-activity"></div>
+        
+        <div class="section-title">
+          <h2>Recommended Courses</h2>
+          <a href="#" onclick="showSection('my-courses')">Browse All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div id="recommended-courses" class="courses-grid"></div>
+      </div>
+      
+      <!-- My Courses Section -->
+      <div id="my-courses" class="dashboard-section" style="display: none;">
+        <div class="section-title">
+          <h2>My Courses</h2>
+          <button class="btn" onclick="openAddCourseModal()"><i class="fas fa-plus"></i> Add New Course</button>
+        </div>
+        <div id="courses-list" class="courses-grid"></div>
+      </div>
+      
+      <!-- Progress Section -->
+      <div id="progress" class="dashboard-section" style="display: none;">
+        <div class="section-title">
+          <h2>Learning Progress</h2>
+        </div>
+        <div id="progress-chart">
+          <div class="card">
+            <h3>Course Completion</h3>
+            <div class="progress-bar">
+              <div class="progress" id="completion-progress" style="width: 0%"></div>
+            </div>
+            <p id="completion-text">0% Complete</p>
+          </div>
+        </div>
+        <div class="section-title" style="margin-top: 30px;">
+          <h2>Learning Statistics</h2>
+        </div>
+        <div id="learning-stats" class="stats-grid"></div>
+      </div>
+      
+      <!-- Resources Section -->
+      <div id="resources" class="dashboard-section" style="display: none;">
+        <div class="section-title">
+          <h2>Learning Resources</h2>
+        </div>
+        <div id="resources-list" class="courses-grid"></div>
+      </div>
+      
+      <!-- Profile Section -->
+      <div id="profile" class="dashboard-section" style="display: none;">
+        <div class="section-title">
+          <h2>Profile Settings</h2>
+        </div>
+        <div class="card">
+          <form id="profile-form">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" class="form-control" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" class="form-control" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+              <label for="bio">Bio</label>
+              <textarea id="bio" class="form-control" rows="4" placeholder="Tell us about yourself"></textarea>
+            </div>
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Update Profile</button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Settings Section -->
+      <div id="settings" class="dashboard-section" style="display: none;">
+        <div class="section-title">
+          <h2>Account Settings</h2>
+        </div>
+        <div class="card">
+          <h3>Notification Preferences</h3>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="email-notifications" checked> Email Notifications
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="course-updates" checked> Course Updates
+            </label>
+          </div>
+          <button class="btn" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Course Modal -->
+  <div id="add-course-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Course</h2>
+        <button class="close-modal" onclick="closeAddCourseModal()">&times;</button>
+      </div>
+      <form id="add-course-form">
+        <div class="form-group">
+          <label for="course-title">Course Title</label>
+          <input type="text" id="course-title" class="form-control" placeholder="Enter course title" required>
+        </div>
+        <div class="form-group">
+          <label for="course-description">Course Description</label>
+          <textarea id="course-description" class="form-control" rows="3" placeholder="Enter course description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="course-category">Category</label>
+          <select id="course-category" class="form-control">
+            <option value="programming">Programming</option>
+            <option value="design">Design</option>
+            <option value="business">Business</option>
+            <option value="language">Language</option>
+          </select>
+        </div>
+        <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Course</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Sample data for demonstration
+    let userData = {
+      name: "John Doe",
+      email: "john.doe@example.com",
+      bio: "Passionate learner focused on web development and data science.",
+      courses: [
+        {
+          id: 1,
+          title: "JavaScript Fundamentals",
+          shortDesc: "Learn the basics of JavaScript programming",
+          category: "programming",
+          progress: 75,
+          lastAccessed: "2023-05-15"
+        },
+        {
+          id: 2,
+          title: "React for Beginners",
+          shortDesc: "Build modern web applications with React",
+          category: "programming",
+          progress: 30,
+          lastAccessed: "2023-05-10"
+        },
+        {
+          id: 3,
+          title: "UI/UX Design Principles",
+          shortDesc: "Create beautiful and functional user interfaces",
+          category: "design",
+          progress: 100,
+          lastAccessed: "2023-04-28"
+        }
+      ],
+      resources: [
+        {
+          title: "JavaScript Documentation",
+          description: "Official MDN JavaScript documentation",
+          type: "documentation",
+          url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+        },
+        {
+          title: "React Tutorial",
+          description: "Step-by-step React tutorial for beginners",
+          type: "tutorial",
+          url: "https://reactjs.org/tutorial/tutorial.html"
+        },
+        {
+          title: "CSS Tricks",
+          description: "Helpful CSS tips and tricks",
+          type: "blog",
+          url: "https://css-tricks.com/"
+        }
+      ],
+      stats: {
+        totalStudyTime: 45,
+        completedCourses: 1,
+        certificates: 2
+      }
+    };
+
+    // Initialize dashboard
+    document.addEventListener('DOMContentLoaded', function() {
+      loadDashboardData();
+      setupEventListeners();
+    });
+
+    // Load dashboard data
+    function loadDashboardData() {
+      // Update stats
+      document.getElementById('total-courses').textContent = userData.courses.length;
+      document.getElementById('completed-courses').textContent = userData.courses.filter(c => c.progress === 100).length;
+      document.getElementById('in-progress').textContent = userData.courses.filter(c => c.progress > 0 && c.progress < 100).length;
+      document.getElementById('study-time').textContent = userData.stats.totalStudyTime + 'h';
+
+      // Load courses
+      renderCourses();
+      
+      // Load recent activity
+      renderRecentActivity();
+      
+      // Load recommended courses
+      renderRecommendedCourses();
+      
+      // Load progress data
+      renderProgressData();
+      
+      // Load resources
+      renderResources();
+      
+      // Load profile data
+      loadProfileData();
+    }
+
+    // Render courses list
+    function renderCourses() {
+      const coursesList = document.getElementById('courses-list');
+      if (userData.courses.length === 0) {
+        coursesList.innerHTML = '<div class="empty-state"><h3>No courses yet</h3><p>Get started by adding your first course!</p></div>';
+        return;
+      }
+      
+      coursesList.innerHTML = userData.courses.map(course => `
+        <div class="card">
+          <h3>${course.title}</h3>
+          <p>${course.shortDesc}</p>
+          <div class="card-meta">
+            <span><i class="fas fa-tag"></i> ${course.category}</span>
+            <span><i class="fas fa-chart-line"></i> ${course.progress}% Complete</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress" style="width: ${course.progress}%"></div>
+          </div>
+          <div class="card-meta">
+            <span><i class="far fa-clock"></i> Last accessed: ${formatDate(course.lastAccessed)}</span>
+            <button class="btn btn-accent" onclick="continueCourse(${course.id})"><i class="fas fa-play"></i> Continue</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render recent activity
+    function renderRecentActivity() {
+      const recentActivity = document.getElementById('recent-activity');
+      const recentCourses = userData.courses
+        .sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed))
+        .slice(0, 3);
+      
+      if (recentCourses.length === 0) {
+        recentActivity.innerHTML = '<div class="empty-state"><h3>No recent activity</h3><p>Start learning to see your activity here!</p></div>';
+        return;
+      }
+      
+      recentActivity.innerHTML = recentCourses.map(course => `
+        <div class="card">
+          <h3>${course.title}</h3>
+          <p>You last studied this course on ${formatDate(course.lastAccessed)}</p>
+          <div class="progress-bar">
+            <div class="progress" style="width: ${course.progress}%"></div>
+          </div>
+          <p><i class="fas fa-chart-line"></i> Progress: ${course.progress}%</p>
+        </div>
+      `).join('');
+    }
+
+    // Render recommended courses
+    function renderRecommendedCourses() {
+      const recommendedCourses = document.getElementById('recommended-courses');
+      const recommendations = [
+        {
+          title: "Advanced JavaScript",
+          description: "Deep dive into advanced JavaScript concepts",
+          category: "programming"
+        },
+        {
+          title: "Node.js Backend Development",
+          description: "Build scalable server-side applications",
+          category: "programming"
+        },
+        {
+          title: "Data Visualization with D3.js",
+          description: "Create interactive data visualizations",
+          category: "programming"
+        }
+      ];
+      
+      recommendedCourses.innerHTML = recommendations.map(course => `
+        <div class="card">
+          <h3>${course.title}</h3>
+          <p>${course.description}</p>
+          <div class="card-meta">
+            <span><i class="fas fa-tag"></i> ${course.category}</span>
+            <button class="btn btn-accent" onclick="enrollInCourse('${course.title}')"><i class="fas fa-plus"></i> Enroll</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render progress data
+    function renderProgressData() {
+      const totalProgress = userData.courses.reduce((sum, course) => sum + course.progress, 0);
+      const avgProgress = userData.courses.length > 0 ? Math.round(totalProgress / userData.courses.length) : 0;
+      
+      document.getElementById('completion-progress').style.width = `${avgProgress}%`;
+      document.getElementById('completion-text').textContent = `${avgProgress}% Complete`;
+      
+      // Learning stats
+      const learningStats = document.getElementById('learning-stats');
+      learningStats.innerHTML = `
+        <div class="stat-card">
+          <h3>${userData.stats.completedCourses}</h3>
+          <p>Courses Completed</p>
+        </div>
+        <div class="stat-card">
+          <h3>${userData.stats.certificates}</h3>
+          <p>Certificates Earned</p>
+        </div>
+        <div class="stat-card">
+          <h3>${userData.stats.totalStudyTime}h</h3>
+          <p>Total Study Time</p>
+        </div>
+        <div class="stat-card">
+          <h3>${calculateStreak()}d</h3>
+          <p>Current Streak</p>
+        </div>
+      `;
+    }
+
+    // Render resources
+    function renderResources() {
+      const resourcesList = document.getElementById('resources-list');
+      resourcesList.innerHTML = userData.resources.map(resource => `
+        <div class="card">
+          <h3>${resource.title}</h3>
+          <p>${resource.description}</p>
+          <div class="card-meta">
+            <span><i class="fas fa-tag"></i> ${resource.type}</span>
+            <a href="${resource.url}" target="_blank" class="btn btn-accent"><i class="fas fa-external-link-alt"></i> Visit Resource</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Load profile data
+    function loadProfileData() {
+      document.getElementById('name').value = userData.name;
+      document.getElementById('email').value = userData.email;
+      document.getElementById('bio').value = userData.bio;
+    }
+
+    // Show/hide sections
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.dashboard-section');
+      sections.forEach(section => {
+        section.style.display = 'none';
+      });
+      
+      // Show selected section
+      document.getElementById(sectionId).style.display = 'block';
+      
+      // Update active nav link
+      const navLinks = document.querySelectorAll('.sidebar-left a');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    // Open add course modal
+    function openAddCourseModal() {
+      document.getElementById('add-course-modal').style.display = 'flex';
+    }
+
+    // Close add course modal
+    function closeAddCourseModal() {
+      document.getElementById('add-course-modal').style.display = 'none';
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Add course form
+      document.getElementById('add-course-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const title = document.getElementById('course-title').value;
+        const description = document.getElementById('course-description').value;
+        const category = document.getElementById('course-category').value;
+        
+        addNewCourse(title, description, category);
+        closeAddCourseModal();
+      });
+      
+      // Profile form
+      document.getElementById('profile-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        saveProfile();
+      });
+    }
+
+    // Add new course
+    function addNewCourse(title, description, category) {
+      const newCourse = {
+        id: userData.courses.length + 1,
+        title: title,
+        shortDesc: description,
+        category: category,
+        progress: 0,
+        lastAccessed: new Date().toISOString().split('T')[0]
+      };
+      
+      userData.courses.push(newCourse);
+      renderCourses();
+      loadDashboardData(); // Refresh stats
+      
+      // Show success message
+      alert(`Course "${title}" added successfully!`);
+    }
+
+    // Continue course
+    function continueCourse(courseId) {
+      const course = userData.courses.find(c => c.id === courseId);
+      if (course) {
+        // Update last accessed date
+        course.lastAccessed = new Date().toISOString().split('T')[0];
+        
+        // Simulate progress increase
+        if (course.progress < 100) {
+          course.progress = Math.min(course.progress + 10, 100);
+        }
+        
+        renderCourses();
+        renderRecentActivity();
+        renderProgressData();
+        
+        alert(`Continuing with "${course.title}" - Progress: ${course.progress}%`);
+      }
+    }
+
+    // Enroll in course
+    function enrollInCourse(courseTitle) {
+      alert(`Enrolled in "${courseTitle}" successfully!`);
+    }
+
+    // Save profile
+    function saveProfile() {
+      userData.name = document.getElementById('name').value;
+      userData.email = document.getElementById('email').value;
+      userData.bio = document.getElementById('bio').value;
+      
+      alert('Profile updated successfully!');
+    }
+
+    // Save settings
+    function saveSettings() {
+      const emailNotifications = document.getElementById('email-notifications').checked;
+      const courseUpdates = document.getElementById('course-updates').checked;
+      
+      alert('Settings saved successfully!');
+    }
+
+    // Helper functions
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    function calculateStreak() {
+      // Simple streak calculation for demo
+      return Math.floor(Math.random() * 10) + 1;
+    }
+
+    // Original fetch function (kept for compatibility)
+    fetch('/api/courses').then(r=>r.json()).then(data=>{
+      const el = document.getElementById('my-courses');
+      el.innerHTML = data.map(c=>`<div class="card"><h3>${c.title}</h3><p>${c.shortDesc||''}</p></div>`).join('');
+    }).catch(err => {
+      console.log('API not available, using demo data');
+    });
+  </script>
+</body>
+</html>

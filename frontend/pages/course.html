@@ -1,0 +1,1125 @@
+<!-- <!doctype html>
+<html lang="en">
+<head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Course - RID GATE</title><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+  <div class="container page">
+    <a href="/pages/courses.html" class="btn">← Back to Courses</a>
+    <div id="course-detail"></div>
+  </div>
+<script src="/js/course.js"></script>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - RID GATE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ffcc00;
+            --danger: #dc3545;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --hover-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 99;
+            padding: 20px;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-menu a:last-child {
+            border-bottom: none;
+        }
+
+        /* Main Layout */
+        .page {
+            display: flex;
+            min-height: calc(100vh - 70px);
+            gap: 30px;
+            padding-top: 20px;
+        }
+
+        /* Sidebar Styles */
+        .sidebar-left {
+            width: 280px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 20px;
+            height: fit-content;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 90px;
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .brand a {
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .brand i {
+            color: var(--accent);
+        }
+
+        .sidebar-left h3 {
+            margin: 25px 0 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-left h3 i {
+            color: var(--accent);
+        }
+
+        .sidebar-left ul {
+            list-style: none;
+        }
+
+        .sidebar-left li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-left li:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+
+        .sidebar-left li.active {
+            background: rgba(255,255,255,0.15);
+            font-weight: 600;
+        }
+
+        .sidebar-left li i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-col {
+            flex: 1;
+            padding: 0 0 30px 0;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            color: var(--secondary);
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .search-row {
+            display: flex;
+            margin-bottom: 30px;
+            gap: 10px;
+            background: white;
+            padding: 5px;
+            border-radius: 50px;
+            box-shadow: var(--card-shadow);
+            max-width: 500px;
+        }
+
+        .search-row input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: #2aa9d6;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #3d9a36;
+        }
+
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Card Grid Styles */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .card-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: var(--secondary);
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+        }
+
+        .card-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .rating {
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Video Section Styles */
+        .videos-section {
+            margin-top: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            color: var(--secondary);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .view-all:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 160px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .video-thumbnail:hover .play-icon {
+            opacity: 1;
+        }
+
+        .duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .video-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-content h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .video-views {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .video-price {
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 40px 0;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .page {
+                flex-direction: column;
+            }
+            
+            .sidebar-left {
+                width: 100%;
+                position: static;
+            }
+            
+            .card-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-row {
+                width: 100%;
+            }
+            
+            .stats-section {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .stat-item {
+                flex: 1 1 40%;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-actions {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .user-profile span {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-grid, .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-item {
+                flex: 1 1 100%;
+            }
+
+            .nav-brand span {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="container nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>RID GATE</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-book-open"></i> Courses</a>
+                <a href="#"><i class="fas fa-video"></i> Videos</a>
+                <a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a>
+                <a href="#"><i class="fas fa-briefcase"></i> Careers</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn btn-accent"><i class="fas fa-bell"></i></button>
+                <div class="user-profile">
+                    <div class="user-avatar">AS</div>
+                    <span>Ankit Sharma</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
+            <a href="#"><i class="fas fa-book-open"></i> Courses</a>
+            <a href="#"><i class="fas fa-video"></i> Videos</a>
+            <a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a>
+            <a href="#"><i class="fas fa-briefcase"></i> Careers</a>
+            <a href="#"><i class="fas fa-user"></i> Profile</a>
+            <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page">
+            <aside class="sidebar-left">
+                <div class="brand"><a href="/"><i class="fas fa-graduation-cap"></i> RID bharat</a></div>
+                <h3><i class="fas fa-list"></i> Categories</h3>
+                <ul id="category-list">
+                    <li class="active"><i class="fas fa-laptop-code"></i> Web Development</li>
+                    <li><i class="fas fa-chart-line"></i> Data Science</li>
+                    <li><i class="fas fa-mobile-alt"></i> Mobile Development</li>
+                    <li><i class="fas fa-cloud"></i> Cloud Computing</li>
+                    <li><i class="fas fa-shield-alt"></i> Cybersecurity</li>
+                    <li><i class="fas fa-robot"></i> AI & Machine Learning</li>
+                    <li><i class="fas fa-database"></i> Database Management</li>
+                    <li><i class="fas fa-gamepad"></i> Game Development</li>
+                </ul>
+                
+                <h3><i class="fas fa-filter"></i> Filters</h3>
+                <ul>
+                    <li><i class="far fa-clock"></i> Beginner Level</li>
+                    <li><i class="fas fa-clock"></i> Intermediate Level</li>
+                    <li><i class="fas fa-star"></i> Advanced Level</li>
+                    <li><i class="fas fa-certificate"></i> Certified Courses</li>
+                </ul>
+            </aside>
+            
+            <main class="main-col">
+                <div class="header-section">
+                    <h1>All Courses</h1>
+                    <button class="btn btn-accent"><i class="fas fa-plus"></i> New Course</button>
+                </div>
+                
+                <div class="search-row">
+                    <input id="q" placeholder="Search courses, videos, or topics..." />
+                    <button id="searchBtn" class="btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+                
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <div class="stat-number">128</div>
+                        <div class="stat-label">Total Courses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">56</div>
+                        <div class="stat-label">Video Tutorials</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24</div>
+                        <div class="stat-label">Expert Instructors</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5,280</div>
+                        <div class="stat-label">Active Students</div>
+                    </div>
+                </div>
+                
+                <div id="courses-grid" class="card-grid">
+                    <!-- Course cards will be populated by JavaScript -->
+                </div>
+                
+                <!-- Technical Videos Section -->
+                <section class="videos-section">
+                    <div class="section-header">
+                        <h2>Technical Video Tutorials</h2>
+                        <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div id="videos-grid" class="video-grid">
+                        <!-- Video cards will be populated by JavaScript -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Sample course data
+        const courses = [
+            {
+                id: 1,
+                title: "JavaScript Fundamentals",
+                description: "Learn the core concepts of JavaScript programming from scratch",
+                image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "8 weeks",
+                level: "Beginner",
+                price: "$49.99",
+                rating: 4.8,
+                badge: "Popular"
+            },
+            {
+                id: 2,
+                title: "React Masterclass",
+                description: "Build modern web applications with React and Redux",
+                image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "10 weeks",
+                level: "Intermediate",
+                price: "$79.99",
+                rating: 4.9,
+                badge: "Hot"
+            },
+            {
+                id: 3,
+                title: "Node.js Backend Development",
+                description: "Create scalable server-side applications with Node.js",
+                image: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "12 weeks",
+                level: "Advanced",
+                price: "$89.99",
+                rating: 4.7,
+                badge: "New"
+            }
+        ];
+
+        // Sample video data with prices
+        const videos = [
+            {
+                id: 1,
+                title: "Getting Started with React Hooks - Complete Tutorial",
+                thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "15:30",
+                views: "12K",
+                date: "2 days ago",
+                price: "$9.99"
+            },
+            {
+                id: 2,
+                title: "Python List Comprehensions Explained with Examples",
+                thumbnail: "https://images.unsplash.com/photo-1526379879527-8559ecfcaec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "10:45",
+                views: "8.5K",
+                date: "1 week ago",
+                price: "$7.99"
+            },
+            {
+                id: 3,
+                title: "CSS Grid Layout Tutorial - Build Modern Websites",
+                thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "22:10",
+                views: "15.2K",
+                date: "3 days ago",
+                price: "$12.99"
+            },
+            {
+                id: 4,
+                title: "Introduction to Docker Containers for Beginners",
+                thumbnail: "https://images.unsplash.com/photo-1626710550228-17af9de58c1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                duration: "18:25",
+                views: "9.7K",
+                date: "5 days ago",
+                price: "$10.99"
+            }
+        ];
+
+        // Function to render courses
+        function renderCourses() {
+            const coursesGrid = document.getElementById('courses-grid');
+            coursesGrid.innerHTML = '';
+            
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'card';
+                
+                let badgeHTML = '';
+                if (course.badge) {
+                    badgeHTML = `<div class="card-badge">${course.badge}</div>`;
+                }
+                
+                courseCard.innerHTML = `
+                    ${badgeHTML}
+                    <img src="${course.image}" alt="${course.title}" class="card-img">
+                    <div class="card-content">
+                        <h3>${course.title}</h3>
+                        <p>${course.description}</p>
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> ${course.duration}</span>
+                            <span><i class="fas fa-signal"></i> ${course.level}</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">${course.price}</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ${course.rating}
+                            </div>
+                        </div>
+                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-shopping-cart"></i> Buy Now
+                        </button>
+                    </div>
+                `;
+                coursesGrid.appendChild(courseCard);
+            });
+        }
+
+        // Function to render videos
+        function renderVideos() {
+            const videosGrid = document.getElementById('videos-grid');
+            videosGrid.innerHTML = '';
+            
+            videos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="duration">${video.duration}</div>
+                    </div>
+                    <div class="video-content">
+                        <h3>${video.title}</h3>
+                        <div class="video-meta">
+                            <span class="video-views"><i class="far fa-eye"></i> ${video.views}</span>
+                            <span>${video.date}</span>
+                        </div>
+                        <div class="video-price">${video.price}</div>
+                        <button class="btn btn-success btn-sm" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-shopping-cart"></i> Buy Video
+                        </button>
+                    </div>
+                `;
+                videosGrid.appendChild(videoCard);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCourses();
+            renderVideos();
+            
+            // Mobile menu toggle
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.nav-actions') && !e.target.closest('.mobile-menu')) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+            
+            // Add search functionality
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('q').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Add category selection
+            const categoryItems = document.querySelectorAll('.sidebar-left li');
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    categoryItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Add Buy Now button functionality for courses
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-success')) {
+                    const card = e.target.closest('.card, .video-card');
+                    const title = card.querySelector('h3').textContent;
+                    const price = card.querySelector('.price, .video-price').textContent;
+                    
+                    if (card.classList.contains('card')) {
+                        alert(`Thank you for your interest in "${title}"! Price: ${price}. You will be redirected to the checkout page.`);
+                    } else {
+                        alert(`Thank you for your interest in "${title}" video! Price: ${price}. You will be redirected to the checkout page.`);
+                    }
+                }
+            });
+        });
+
+        // Search function
+        function performSearch() {
+            const searchTerm = document.getElementById('q').value.toLowerCase();
+            
+            if (searchTerm.trim() === '') {
+                renderCourses();
+                renderVideos();
+                return;
+            }
+            
+            const filteredCourses = courses.filter(course => 
+                course.title.toLowerCase().includes(searchTerm) || 
+                course.description.toLowerCase().includes(searchTerm)
+            );
+            
+            const filteredVideos = videos.filter(video => 
+                video.title.toLowerCase().includes(searchTerm)
+            );
+            
+            const coursesGrid = document.getElementById('courses-grid');
+            coursesGrid.innerHTML = '';
+            
+            if (filteredCourses.length === 0 && filteredVideos.length === 0) {
+                coursesGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">No courses or videos found matching your search.</p>';
+                return;
+            }
+            
+            // Render filtered courses
+            filteredCourses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'card';
+                
+                let badgeHTML = '';
+                if (course.badge) {
+                    badgeHTML = `<div class="card-badge">${course.badge}</div>`;
+                }
+                
+                courseCard.innerHTML = `
+                    ${badgeHTML}
+                    <img src="${course.image}" alt="${course.title}" class="card-img">
+                    <div class="card-content">
+                        <h3>${course.title}</h3>
+                        <p>${course.description}</p>
+                        <div class="card-meta">
+                            <span><i class="far fa-clock"></i> ${course.duration}</span>
+                            <span><i class="fas fa-signal"></i> ${course.level}</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">${course.price}</div>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> ${course.rating}
+                            </div>
+                        </div>
+                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-shopping-cart"></i> Buy Now
+                        </button>
+                    </div>
+                `;
+                coursesGrid.appendChild(courseCard);
+            });
+            
+            // Update video section with filtered results
+            const videosGrid = document.getElementById('videos-grid');
+            videosGrid.innerHTML = '';
+            
+            filteredVideos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <div class="video-thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="duration">${video.duration}</div>
+                    </div>
+                    <div class="video-content">
+                        <h3>${video.title}</h3>
+                        <div class="video-meta">
+                            <span class="video-views"><i class="far fa-eye"></i> ${video.views}</span>
+                            <span>${video.date}</span>
+                        </div>
+                        <div class="video-price">${video.price}</div>
+                        <button class="btn btn-success btn-sm" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-shopping-cart"></i> Buy Video
+                        </button>
+                    </div>
+                `;
+                videosGrid.appendChild(videoCard);
+            });
+        }
+    </script>
+</body>
+</html>
