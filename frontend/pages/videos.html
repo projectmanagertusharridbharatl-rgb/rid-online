@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - CodeElite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
+                    <h1>CodeElite</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-book-open"></i> Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a></li>
+                        <li><a href="videos.html" class="active"><i class="fas fa-video"></i> Videos</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="signup.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Videos Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 140px 0 60px; margin-top: 80px;">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Video Library</h2>
+                <p>Access premium video content to enhance your learning experience</p>
+                <div class="hero-buttons">
+                    <a href="#featured" class="btn btn-primary"><i class="fas fa-play-circle"></i> Watch Featured</a>
+                    <a href="#all-videos" class="btn btn-outline"><i class="fas fa-list"></i> Browse All</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Videos -->
+    <section class="container" id="featured">
+        <div class="section-title">
+            <h2>Featured Videos</h2>
+            <p>Hand-picked videos to get you started</p>
+        </div>
+        <div class="video-container">
+            <div class="video-player">
+                <div class="play-button">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="video-info">
+                <h3>React Hooks Deep Dive</h3>
+                <p>Learn how to use React Hooks effectively in your applications. This video covers useState, useEffect, useContext, and custom hooks with practical examples.</p>
+                <div class="course-meta">
+                    <span><i class="fas fa-clock"></i> 45 minutes</span>
+                    <span><i class="fas fa-eye"></i> 2.5K views</span>
+                </div>
+                <a href="#" class="btn btn-accent"><i class="fas fa-play"></i> Watch Full Video</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Videos Grid -->
+    <section class="container" id="all-videos">
+        <div class="section-title">
+            <h2>All Videos</h2>
+            <p>Browse through our complete video collection</p>
+        </div>
+        <div class="courses-grid">
+            <!-- Video 1 -->
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="JavaScript Basics" class="course-img">
+                <div class="course-content">
+                    <h3>JavaScript Fundamentals</h3>
+                    <p>Learn the basics of JavaScript programming language</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 30 min</span>
+                        <span><i class="fas fa-eye"></i> 1.2K views</span>
+                    </div>
+                    <div class="course-actions">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-play"></i> Watch</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video 2 -->
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Python Tutorial" class="course-img">
+                <div class="course-content">
+                    <h3>Python for Beginners</h3>
+                    <p>Get started with Python programming language</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 45 min</span>
+                        <span><i class="fas fa-eye"></i> 2.1K views</span>
+                    </div>
+                    <div class="course-actions">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-play"></i> Watch</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Video 3 -->
+            <div class="course-card">
+                <img src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="AWS Tutorial" class="course-img">
+                <div class="course-content">
+                    <h3>AWS Services Overview</h3>
+                    <p>Introduction to Amazon Web Services and cloud computing</p>
+                    <div class="course-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-eye"></i> 3.4K views</span>
+                    </div>
+                    <div class="course-actions">
+                        <a href="#" class="btn btn-primary"><i class="fas fa-play"></i> Watch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CodeElite</h3>
+                    <p>Your gateway to mastering technical skills through high-quality video courses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-chevron-right"></i> All Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Become an Instructor</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-envelope"></i> support@codeelite.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Tech Street, San Francisco, CA</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 CodeElite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+</body>
+</html>

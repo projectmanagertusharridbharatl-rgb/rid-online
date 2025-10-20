@@ -1,536 +1,731 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <title>Dashboard - RID BHARAT</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel='stylesheet' href='/css/dashboard.css'>
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CodeElite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .dashboard {
+            margin-top: 100px;
+            padding: 40px 0;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+        
+        .stat-card p {
+            color: #64748b;
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #3b82f6;
+            border-radius: 4px;
+        }
 
-  </style>
+        /* ✅ Profile Picture Styles */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #3b82f6;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #3b82f6;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .avatar-upload:hover {
+            background: #2563eb;
+            transform: scale(1.1);
+        }
+
+        .avatar-upload input {
+            display: none;
+        }
+
+        .profile-info h2 {
+            margin: 0 0 0.5rem 0;
+            color: #1e293b;
+        }
+
+        .profile-info p {
+            margin: 0;
+            color: #64748b;
+        }
+
+        .profile-role {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+    </style>
 </head>
 <body>
-  <div class="container page">
-    <aside class="sidebar-left">
-      <div class="brand"><a href="/"><i class="fas fa-graduation-cap"></i> RID BHARAT</a></div>
-      <ul>
-        <li><a href="/index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
-        <li><a href="#" onclick="showSection('overview')"><i class="fas fa-chart-pie"></i> Overview</a></li>
-        <li><a href="#" onclick="showSection('my-courses')"><i class="fas fa-book-open"></i> My Courses</a></li>
-        <li><a href="#" onclick="showSection('progress')"><i class="fas fa-chart-line"></i> Progress</a></li>
-        <li><a href="#" onclick="showSection('resources')"><i class="fas fa-file-alt"></i> Resources</a></li>
-        <li><a href="#" onclick="showSection('profile')"><i class="fas fa-user"></i> Profile</a></li>
-        <li><a href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
-      </ul>
-    </aside>
-    <main class="main-col">
-      <h1>Your Dashboard</h1>
-      
-      <!-- Overview Section -->
-      <div id="overview" class="dashboard-section">
-        <div class="stats-grid">
-          <div class="stat-card">
-            <h3 id="total-courses">0</h3>
-            <p>Total Courses</p>
-          </div>
-          <div class="stat-card">
-            <h3 id="completed-courses">0</h3>
-            <p>Completed</p>
-          </div>
-          <div class="stat-card">
-            <h3 id="in-progress">0</h3>
-            <p>In Progress</p>
-          </div>
-          <div class="stat-card">
-            <h3 id="study-time">0h</h3>
-            <p>Study Time</p>
-          </div>
-        </div>
-        
-        <div class="section-title">
-          <h2>Recent Activity</h2>
-          <a href="#" onclick="showSection('progress')">View All <i class="fas fa-arrow-right"></i></a>
-        </div>
-        <div id="recent-activity"></div>
-        
-        <div class="section-title">
-          <h2>Recommended Courses</h2>
-          <a href="#" onclick="showSection('my-courses')">Browse All <i class="fas fa-arrow-right"></i></a>
-        </div>
-        <div id="recommended-courses" class="courses-grid"></div>
-      </div>
-      
-      <!-- My Courses Section -->
-      <div id="my-courses" class="dashboard-section" style="display: none;">
-        <div class="section-title">
-          <h2>My Courses</h2>
-          <button class="btn" onclick="openAddCourseModal()"><i class="fas fa-plus"></i> Add New Course</button>
-        </div>
-        <div id="courses-list" class="courses-grid"></div>
-      </div>
-      
-      <!-- Progress Section -->
-      <div id="progress" class="dashboard-section" style="display: none;">
-        <div class="section-title">
-          <h2>Learning Progress</h2>
-        </div>
-        <div id="progress-chart">
-          <div class="card">
-            <h3>Course Completion</h3>
-            <div class="progress-bar">
-              <div class="progress" id="completion-progress" style="width: 0%"></div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
+                    <h1>CodeElite</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-book-open"></i> Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a></li>
+                        <li><a href="videos.html"><i class="fas fa-video"></i> Videos</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <!-- Will be populated by JavaScript -->
+                </div>
             </div>
-            <p id="completion-text">0% Complete</p>
-          </div>
         </div>
-        <div class="section-title" style="margin-top: 30px;">
-          <h2>Learning Statistics</h2>
-        </div>
-        <div id="learning-stats" class="stats-grid"></div>
-      </div>
-      
-      <!-- Resources Section -->
-      <div id="resources" class="dashboard-section" style="display: none;">
-        <div class="section-title">
-          <h2>Learning Resources</h2>
-        </div>
-        <div id="resources-list" class="courses-grid"></div>
-      </div>
-      
-      <!-- Profile Section -->
-      <div id="profile" class="dashboard-section" style="display: none;">
-        <div class="section-title">
-          <h2>Profile Settings</h2>
-        </div>
-        <div class="card">
-          <form id="profile-form">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" class="form-control" placeholder="Enter your full name">
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" class="form-control" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-              <label for="bio">Bio</label>
-              <textarea id="bio" class="form-control" rows="4" placeholder="Tell us about yourself"></textarea>
-            </div>
-            <button type="submit" class="btn"><i class="fas fa-save"></i> Update Profile</button>
-          </form>
-        </div>
-      </div>
-      
-      <!-- Settings Section -->
-      <div id="settings" class="dashboard-section" style="display: none;">
-        <div class="section-title">
-          <h2>Account Settings</h2>
-        </div>
-        <div class="card">
-          <h3>Notification Preferences</h3>
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="email-notifications" checked> Email Notifications
-            </label>
-          </div>
-          <div class="form-group">
-            <label>
-              <input type="checkbox" id="course-updates" checked> Course Updates
-            </label>
-          </div>
-          <button class="btn" onclick="saveSettings()"><i class="fas fa-save"></i> Save Settings</button>
-        </div>
-      </div>
-    </main>
-  </div>
+    </header>
 
-  <!-- Add Course Modal -->
-  <div id="add-course-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Add New Course</h2>
-        <button class="close-modal" onclick="closeAddCourseModal()">&times;</button>
-      </div>
-      <form id="add-course-form">
-        <div class="form-group">
-          <label for="course-title">Course Title</label>
-          <input type="text" id="course-title" class="form-control" placeholder="Enter course title" required>
-        </div>
-        <div class="form-group">
-          <label for="course-description">Course Description</label>
-          <textarea id="course-description" class="form-control" rows="3" placeholder="Enter course description"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="course-category">Category</label>
-          <select id="course-category" class="form-control">
-            <option value="programming">Programming</option>
-            <option value="design">Design</option>
-            <option value="business">Business</option>
-            <option value="language">Language</option>
-          </select>
-        </div>
-        <button type="submit" class="btn"><i class="fas fa-plus"></i> Add Course</button>
-      </form>
-    </div>
-  </div>
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <div class="container">
+            <!-- ✅ Profile Header with Picture -->
+            <div class="profile-header" id="profileHeader">
+                <div class="profile-avatar">
+                    <img id="currentAvatar" src="" alt="Profile Picture">
+                    <label class="avatar-upload" for="profileAvatar">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" id="profileAvatar" accept="image/*">
+                    </label>
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileUserName">Loading...</h2>
+                    <p id="profileUserEmail">Loading...</p>
+                    <span class="profile-role" id="profileUserRole">Student</span>
+                </div>
+            </div>
 
-  <script>
-    // Sample data for demonstration
-    let userData = {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      bio: "Passionate learner focused on web development and data science.",
-      courses: [
-        {
-          id: 1,
-          title: "JavaScript Fundamentals",
-          shortDesc: "Learn the basics of JavaScript programming",
-          category: "programming",
-          progress: 75,
-          lastAccessed: "2023-05-15"
-        },
-        {
-          id: 2,
-          title: "React for Beginners",
-          shortDesc: "Build modern web applications with React",
-          category: "programming",
-          progress: 30,
-          lastAccessed: "2023-05-10"
-        },
-        {
-          id: 3,
-          title: "UI/UX Design Principles",
-          shortDesc: "Create beautiful and functional user interfaces",
-          category: "design",
-          progress: 100,
-          lastAccessed: "2023-04-28"
+            <h1 style="margin-bottom: 2rem; color: #1e293b;">Student Dashboard</h1>
+            
+            <!-- Stats -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <i class="fas fa-book-open"></i>
+                    <h3 id="enrolledCoursesCount">0</h3>
+                    <p>Enrolled Courses</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3 id="totalHours">0</h3>
+                    <p>Learning Hours</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-certificate"></i>
+                    <h3 id="completedCourses">0</h3>
+                    <p>Completed Courses</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3 id="achievements">5</h3>
+                    <p>Achievements</p>
+                </div>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="dashboard-tabs">
+                <button class="tab active" data-tab="enrolled">Enrolled Courses</button>
+                <button class="tab" data-tab="progress">Learning Progress</button>
+                <button class="tab" data-tab="achievements">Achievements</button>
+                <button class="tab" data-tab="profile">Profile Settings</button>
+            </div>
+            
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="enrolled-tab">
+                <h2 style="margin-bottom: 2rem;">My Enrolled Courses</h2>
+                <div class="courses-grid" id="enrolledCoursesGrid">
+                    <div class="loading-message">Loading your courses...</div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="progress-tab">
+                <h2 style="margin-bottom: 2rem;">Learning Progress</h2>
+                <div class="courses-grid" id="progressCoursesGrid">
+                    <div class="loading-message">Loading progress data...</div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="achievements-tab">
+                <h2 style="margin-bottom: 2rem;">My Achievements</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>First Course Completed</h3>
+                        <p>Completed your first course on CodeElite</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-star"></i></div>
+                        <h3>Perfect Score</h3>
+                        <p>Achieved 100% in a course assessment</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                        <h3>Fast Learner</h3>
+                        <p>Completed a course in record time</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-users"></i></div>
+                        <h3>Community Contributor</h3>
+                        <p>Helped other students in the forum</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="profile-tab">
+                <h2 style="margin-bottom: 2rem;">Profile Settings</h2>
+                <div class="upload-form">
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="profileName"><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" id="profileName" class="form-control" placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileEmail"><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="profileEmail" class="form-control" placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileBio"><i class="fas fa-align-left"></i> Bio</label>
+                            <textarea id="profileBio" class="form-control" placeholder="Tell us about yourself" rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-camera"></i> Profile Picture</label>
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                                <img id="profileAvatarPreview" src="" alt="Current Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0;">
+                                <div>
+                                    <input type="file" id="profileAvatarInput" class="form-control" accept="image/*" style="margin-bottom: 0.5rem;">
+                                    <small style="color: #64748b;">Max file size: 5MB. Supported formats: JPG, PNG, GIF</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.2rem;">
+                            <i class="fas fa-save"></i> Update Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CodeElite</h3>
+                    <p>Your gateway to mastering technical skills through high-quality video courses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-chevron-right"></i> All Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Become an Instructor</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-envelope"></i> support@codeelite.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Tech Street, San Francisco, CA</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 CodeElite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script>
+        // Dashboard specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab functionality
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    const tabId = tab.dataset.tab + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Load user data
+            if (Auth.isAuthenticated()) {
+                loadDashboardData();
+            } else {
+                window.location.href = 'login.html';
+            }
+            
+            // Profile form handling
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    updateUserProfile();
+                });
+            }
+
+            // Avatar upload functionality
+            const avatarInput = document.getElementById('profileAvatar');
+            const profileAvatarInput = document.getElementById('profileAvatarInput');
+            
+            if (avatarInput) {
+                avatarInput.addEventListener('change', function(e) {
+                    handleAvatarUpload(this.files[0]);
+                });
+            }
+            
+            if (profileAvatarInput) {
+                profileAvatarInput.addEventListener('change', function(e) {
+                    const file = this.files[0];
+                    if (file) {
+                        previewAvatar(file, 'profileAvatarPreview');
+                    }
+                });
+            }
+        });
+        
+        async function loadDashboardData() {
+            try {
+                // Load user profile first
+                const profile = await UserAPI.getProfile();
+                if (profile.success) {
+                    updateProfileHeader(profile.data);
+                    updateProfileForm(profile.data);
+                }
+                
+                // Load enrolled courses
+                const enrolledCourses = await UserAPI.getEnrolledCourses();
+                if (enrolledCourses.success) {
+                    updateEnrolledCourses(enrolledCourses.data);
+                    updateStats(enrolledCourses.data);
+                } else {
+                    document.getElementById('enrolledCoursesGrid').innerHTML = 
+                        '<p>Error loading courses. Please try again.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                document.getElementById('enrolledCoursesGrid').innerHTML = 
+                    '<p>Error loading dashboard data. Please check your connection.</p>';
+            }
         }
-      ],
-      resources: [
-        {
-          title: "JavaScript Documentation",
-          description: "Official MDN JavaScript documentation",
-          type: "documentation",
-          url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-        },
-        {
-          title: "React Tutorial",
-          description: "Step-by-step React tutorial for beginners",
-          type: "tutorial",
-          url: "https://reactjs.org/tutorial/tutorial.html"
-        },
-        {
-          title: "CSS Tricks",
-          description: "Helpful CSS tips and tricks",
-          type: "blog",
-          url: "https://css-tricks.com/"
+
+        // ✅ Update profile header with user info and avatar
+        function updateProfileHeader(user) {
+            document.getElementById('profileUserName').textContent = user.name || 'User';
+            document.getElementById('profileUserEmail').textContent = user.email || '';
+            document.getElementById('profileUserRole').textContent = user.role || 'Student';
+            
+            // Set avatar image
+            const avatarUrl = user.avatar && user.avatar !== 'default-avatar.png' 
+                ? `/uploads/avatars/${user.avatar}`
+                : getDefaultAvatar(user.name);
+            
+            document.getElementById('currentAvatar').src = avatarUrl;
+            document.getElementById('profileAvatarPreview').src = avatarUrl;
         }
-      ],
-      stats: {
-        totalStudyTime: 45,
-        completedCourses: 1,
-        certificates: 2
-      }
-    };
 
-    // Initialize dashboard
-    document.addEventListener('DOMContentLoaded', function() {
-      loadDashboardData();
-      setupEventListeners();
-    });
-
-    // Load dashboard data
-    function loadDashboardData() {
-      // Update stats
-      document.getElementById('total-courses').textContent = userData.courses.length;
-      document.getElementById('completed-courses').textContent = userData.courses.filter(c => c.progress === 100).length;
-      document.getElementById('in-progress').textContent = userData.courses.filter(c => c.progress > 0 && c.progress < 100).length;
-      document.getElementById('study-time').textContent = userData.stats.totalStudyTime + 'h';
-
-      // Load courses
-      renderCourses();
-      
-      // Load recent activity
-      renderRecentActivity();
-      
-      // Load recommended courses
-      renderRecommendedCourses();
-      
-      // Load progress data
-      renderProgressData();
-      
-      // Load resources
-      renderResources();
-      
-      // Load profile data
-      loadProfileData();
-    }
-
-    // Render courses list
-    function renderCourses() {
-      const coursesList = document.getElementById('courses-list');
-      if (userData.courses.length === 0) {
-        coursesList.innerHTML = '<div class="empty-state"><h3>No courses yet</h3><p>Get started by adding your first course!</p></div>';
-        return;
-      }
-      
-      coursesList.innerHTML = userData.courses.map(course => `
-        <div class="card">
-          <h3>${course.title}</h3>
-          <p>${course.shortDesc}</p>
-          <div class="card-meta">
-            <span><i class="fas fa-tag"></i> ${course.category}</span>
-            <span><i class="fas fa-chart-line"></i> ${course.progress}% Complete</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress" style="width: ${course.progress}%"></div>
-          </div>
-          <div class="card-meta">
-            <span><i class="far fa-clock"></i> Last accessed: ${formatDate(course.lastAccessed)}</span>
-            <button class="btn btn-accent" onclick="continueCourse(${course.id})"><i class="fas fa-play"></i> Continue</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Render recent activity
-    function renderRecentActivity() {
-      const recentActivity = document.getElementById('recent-activity');
-      const recentCourses = userData.courses
-        .sort((a, b) => new Date(b.lastAccessed) - new Date(a.lastAccessed))
-        .slice(0, 3);
-      
-      if (recentCourses.length === 0) {
-        recentActivity.innerHTML = '<div class="empty-state"><h3>No recent activity</h3><p>Start learning to see your activity here!</p></div>';
-        return;
-      }
-      
-      recentActivity.innerHTML = recentCourses.map(course => `
-        <div class="card">
-          <h3>${course.title}</h3>
-          <p>You last studied this course on ${formatDate(course.lastAccessed)}</p>
-          <div class="progress-bar">
-            <div class="progress" style="width: ${course.progress}%"></div>
-          </div>
-          <p><i class="fas fa-chart-line"></i> Progress: ${course.progress}%</p>
-        </div>
-      `).join('');
-    }
-
-    // Render recommended courses
-    function renderRecommendedCourses() {
-      const recommendedCourses = document.getElementById('recommended-courses');
-      const recommendations = [
-        {
-          title: "Advanced JavaScript",
-          description: "Deep dive into advanced JavaScript concepts",
-          category: "programming"
-        },
-        {
-          title: "Node.js Backend Development",
-          description: "Build scalable server-side applications",
-          category: "programming"
-        },
-        {
-          title: "Data Visualization with D3.js",
-          description: "Create interactive data visualizations",
-          category: "programming"
+        // ✅ Get default avatar based on user name
+        function getDefaultAvatar(name) {
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+            const char = name ? name.charAt(0).toUpperCase() : 'U';
+            const color = colors[char.charCodeAt(0) % colors.length];
+            
+            return `data:image/svg+xml;base64,${btoa(`
+                <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="${color}"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+                          fill="white" font-family="Arial" font-size="80" font-weight="bold">
+                        ${char}
+                    </text>
+                </svg>
+            `)}`;
         }
-      ];
-      
-      recommendedCourses.innerHTML = recommendations.map(course => `
-        <div class="card">
-          <h3>${course.title}</h3>
-          <p>${course.description}</p>
-          <div class="card-meta">
-            <span><i class="fas fa-tag"></i> ${course.category}</span>
-            <button class="btn btn-accent" onclick="enrollInCourse('${course.title}')"><i class="fas fa-plus"></i> Enroll</button>
-          </div>
-        </div>
-      `).join('');
-    }
 
-    // Render progress data
-    function renderProgressData() {
-      const totalProgress = userData.courses.reduce((sum, course) => sum + course.progress, 0);
-      const avgProgress = userData.courses.length > 0 ? Math.round(totalProgress / userData.courses.length) : 0;
-      
-      document.getElementById('completion-progress').style.width = `${avgProgress}%`;
-      document.getElementById('completion-text').textContent = `${avgProgress}% Complete`;
-      
-      // Learning stats
-      const learningStats = document.getElementById('learning-stats');
-      learningStats.innerHTML = `
-        <div class="stat-card">
-          <h3>${userData.stats.completedCourses}</h3>
-          <p>Courses Completed</p>
-        </div>
-        <div class="stat-card">
-          <h3>${userData.stats.certificates}</h3>
-          <p>Certificates Earned</p>
-        </div>
-        <div class="stat-card">
-          <h3>${userData.stats.totalStudyTime}h</h3>
-          <p>Total Study Time</p>
-        </div>
-        <div class="stat-card">
-          <h3>${calculateStreak()}d</h3>
-          <p>Current Streak</p>
-        </div>
-      `;
-    }
+        // ✅ Preview avatar before upload
+        function previewAvatar(file, previewElementId) {
+            const reader = new FileReader();
+            const preview = document.getElementById(previewElementId);
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            
+            reader.readAsDataURL(file);
+        }
 
-    // Render resources
-    function renderResources() {
-      const resourcesList = document.getElementById('resources-list');
-      resourcesList.innerHTML = userData.resources.map(resource => `
-        <div class="card">
-          <h3>${resource.title}</h3>
-          <p>${resource.description}</p>
-          <div class="card-meta">
-            <span><i class="fas fa-tag"></i> ${resource.type}</span>
-            <a href="${resource.url}" target="_blank" class="btn btn-accent"><i class="fas fa-external-link-alt"></i> Visit Resource</a>
-          </div>
-        </div>
-      `).join('');
-    }
+        // ✅ Handle avatar upload
+        async function handleAvatarUpload(file) {
+            if (!file) return;
+            
+            try {
+                // Validate file type and size
+                if (!file.type.startsWith('image/')) {
+                    UI.showAlert('Please select a valid image file', 'error');
+                    return;
+                }
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    UI.showAlert('Image size should be less than 5MB', 'error');
+                    return;
+                }
+                
+                UI.showAlert('Uploading avatar...', 'info');
+                
+                // Create FormData for file upload
+                const formData = new FormData();
+                formData.append('avatar', file);
+                
+                // Update profile with new avatar
+                const result = await updateProfileWithAvatar(formData);
+                
+                if (result.success) {
+                    UI.showAlert('Profile picture updated successfully!');
+                    // Update the avatar in header
+                    const avatarUrl = URL.createObjectURL(file);
+                    document.getElementById('currentAvatar').src = avatarUrl;
+                } else {
+                    UI.showAlert(result.message || 'Failed to update profile picture', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error uploading avatar:', error);
+                UI.showAlert('Error uploading profile picture', 'error');
+            }
+        }
 
-    // Load profile data
-    function loadProfileData() {
-      document.getElementById('name').value = userData.name;
-      document.getElementById('email').value = userData.email;
-      document.getElementById('bio').value = userData.bio;
-    }
+        // ✅ Update profile with avatar (API call)
+        async function updateProfileWithAvatar(formData) {
+            try {
+                const token = Auth.getToken();
+                const response = await fetch('/api/users/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: formData
+                });
 
-    // Show/hide sections
-    function showSection(sectionId) {
-      // Hide all sections
-      const sections = document.querySelectorAll('.dashboard-section');
-      sections.forEach(section => {
-        section.style.display = 'none';
-      });
-      
-      // Show selected section
-      document.getElementById(sectionId).style.display = 'block';
-      
-      // Update active nav link
-      const navLinks = document.querySelectorAll('.sidebar-left a');
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-      });
-      event.target.classList.add('active');
-    }
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                return { success: false, message: 'Network error occurred' };
+            }
+        }
 
-    // Open add course modal
-    function openAddCourseModal() {
-      document.getElementById('add-course-modal').style.display = 'flex';
-    }
+        function updateStats(enrollments) {
+            const enrolledCount = enrollments.length;
+            const completedCount = enrollments.filter(e => e.progress === 100).length;
+            const totalHours = enrollments.reduce((total, enrollment) => {
+                return total + (enrollment.course.duration || 0);
+            }, 0);
 
-    // Close add course modal
-    function closeAddCourseModal() {
-      document.getElementById('add-course-modal').style.display = 'none';
-    }
-
-    // Setup event listeners
-    function setupEventListeners() {
-      // Add course form
-      document.getElementById('add-course-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const title = document.getElementById('course-title').value;
-        const description = document.getElementById('course-description').value;
-        const category = document.getElementById('course-category').value;
-        
-        addNewCourse(title, description, category);
-        closeAddCourseModal();
-      });
-      
-      // Profile form
-      document.getElementById('profile-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        saveProfile();
-      });
-    }
-
-    // Add new course
-    function addNewCourse(title, description, category) {
-      const newCourse = {
-        id: userData.courses.length + 1,
-        title: title,
-        shortDesc: description,
-        category: category,
-        progress: 0,
-        lastAccessed: new Date().toISOString().split('T')[0]
-      };
-      
-      userData.courses.push(newCourse);
-      renderCourses();
-      loadDashboardData(); // Refresh stats
-      
-      // Show success message
-      alert(`Course "${title}" added successfully!`);
-    }
-
-    // Continue course
-    function continueCourse(courseId) {
-      const course = userData.courses.find(c => c.id === courseId);
-      if (course) {
-        // Update last accessed date
-        course.lastAccessed = new Date().toISOString().split('T')[0];
-        
-        // Simulate progress increase
-        if (course.progress < 100) {
-          course.progress = Math.min(course.progress + 10, 100);
+            document.getElementById('enrolledCoursesCount').textContent = enrolledCount;
+            document.getElementById('completedCourses').textContent = completedCount;
+            document.getElementById('totalHours').textContent = totalHours;
         }
         
-        renderCourses();
-        renderRecentActivity();
-        renderProgressData();
+        function updateEnrolledCourses(enrollments) {
+            const grid = document.getElementById('enrolledCoursesGrid');
+            const countElement = document.getElementById('enrolledCoursesCount');
+            
+            if (!enrollments || enrollments.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-book-open" style="font-size: 3rem; color: #64748b; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #64748b; margin-bottom: 1rem;">No Courses Enrolled Yet</h3>
+                        <p style="color: #94a3b8; margin-bottom: 2rem;">Start your learning journey by enrolling in courses.</p>
+                        <a href="courses.html" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Browse Courses
+                        </a>
+                    </div>
+                `;
+                countElement.textContent = '0';
+                return;
+            }
+            
+            countElement.textContent = enrollments.length;
+            
+            grid.innerHTML = enrollments.map(enrollment => {
+                const course = enrollment.course;
+                const imageUrl = course.thumbnail && course.thumbnail !== 'default-thumbnail.jpg' 
+                    ? `/uploads/thumbnails/${course.thumbnail}`
+                    : getCategoryImage(course.category);
+                
+                const progress = enrollment.progress || 0;
+                const progressColor = progress === 100 ? '#10b981' : '#3b82f6';
+                
+                return `
+                    <div class="course-card">
+                        <div class="course-badge">${progress === 100 ? 'Completed' : 'In Progress'}</div>
+                        <img src="${imageUrl}" 
+                             alt="${course.title}" 
+                             class="course-img"
+                             onerror="this.src='${getFallbackImage(course.category)}'; this.onerror=null;">
+                        <div class="course-content">
+                            <h3>${course.title}</h3>
+                            <p>${course.description || 'No description available.'}</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progress}%; background: ${progressColor}"></div>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="fas fa-chart-line"></i> Progress: ${progress}%</span>
+                                <span><i class="fas fa-clock"></i> ${course.duration || 0} hours</span>
+                            </div>
+                            <div class="course-actions">
+                                <button class="btn btn-primary continue-btn" data-course-id="${course._id}">
+                                    <i class="fas fa-play"></i> ${progress === 100 ? 'Review' : 'Continue'}
+                                </button>
+                                <button class="btn btn-outline view-btn" data-course-id="${course._id}">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add event listeners to buttons
+            grid.querySelectorAll('.continue-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const courseId = e.target.dataset.courseId;
+                    continueCourse(courseId);
+                });
+            });
+
+            grid.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const courseId = e.target.dataset.courseId;
+                    viewCourse(courseId);
+                });
+            });
+        }
+
+        function getCategoryImage(category) {
+            const categoryImages = {
+                'javascript': 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'python': 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'react': 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'cloud': 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                'default': 'https://images.unsplash.com/photo-1496171367470-9ed9a91ea931?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
+            };
+            return categoryImages[category] || categoryImages['default'];
+        }
+
+        function getFallbackImage(category) {
+            const colors = {
+                'javascript': '#f7df1e',
+                'python': '#3776ab', 
+                'react': '#61dafb',
+                'cloud': '#ff9900',
+                'default': '#3b82f6'
+            };
+            const color = colors[category] || colors['default'];
+            return `data:image/svg+xml;base64,${btoa(`
+                <svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100%" height="100%" fill="${color}"/>
+                    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+                          fill="white" font-family="Arial" font-size="18" font-weight="bold">
+                        ${(category || 'COURSE').toUpperCase()}
+                    </text>
+                </svg>
+            `)}`;
+        }
         
-        alert(`Continuing with "${course.title}" - Progress: ${course.progress}%`);
-      }
-    }
+        function updateProfileForm(user) {
+            document.getElementById('profileName').value = user.name || '';
+            document.getElementById('profileEmail').value = user.email || '';
+            document.getElementById('profileBio').value = user.bio || '';
+        }
 
-    // Enroll in course
-    function enrollInCourse(courseTitle) {
-      alert(`Enrolled in "${courseTitle}" successfully!`);
-    }
+        async function updateUserProfile() {
+            try {
+                const formData = new FormData();
+                formData.append('name', document.getElementById('profileName').value);
+                formData.append('email', document.getElementById('profileEmail').value);
+                formData.append('bio', document.getElementById('profileBio').value);
 
-    // Save profile
-    function saveProfile() {
-      userData.name = document.getElementById('name').value;
-      userData.email = document.getElementById('email').value;
-      userData.bio = document.getElementById('bio').value;
-      
-      alert('Profile updated successfully!');
-    }
+                // Add avatar file if selected
+                const avatarFile = document.getElementById('profileAvatarInput').files[0];
+                if (avatarFile) {
+                    formData.append('avatar', avatarFile);
+                }
 
-    // Save settings
-    function saveSettings() {
-      const emailNotifications = document.getElementById('email-notifications').checked;
-      const courseUpdates = document.getElementById('course-updates').checked;
-      
-      alert('Settings saved successfully!');
-    }
+                const result = await updateProfileWithAvatar(formData);
+                
+                if (result.success) {
+                    UI.showAlert('Profile updated successfully!');
+                    // Update header with new data
+                    updateProfileHeader(result.data);
+                } else {
+                    UI.showAlert(result.message || 'Failed to update profile', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                UI.showAlert('Error updating profile', 'error');
+            }
+        }
 
-    // Helper functions
-    function formatDate(dateString) {
-      const options = { year: 'numeric', month: 'short', day: 'numeric' };
-      return new Date(dateString).toLocaleDateString(undefined, options);
-    }
+        function continueCourse(courseId) {
+            UI.showAlert(`Continuing course: ${courseId}`);
+        }
 
-    function calculateStreak() {
-      // Simple streak calculation for demo
-      return Math.floor(Math.random() * 10) + 1;
-    }
-
-    // Original fetch function (kept for compatibility)
-    fetch('/api/courses').then(r=>r.json()).then(data=>{
-      const el = document.getElementById('my-courses');
-      el.innerHTML = data.map(c=>`<div class="card"><h3>${c.title}</h3><p>${c.shortDesc||''}</p></div>`).join('');
-    }).catch(err => {
-      console.log('API not available, using demo data');
-    });
-  </script>
+        function viewCourse(courseId) {
+            UI.showAlert(`Viewing course details: ${courseId}`);
+        }
+    </script>
 </body>
 </html>

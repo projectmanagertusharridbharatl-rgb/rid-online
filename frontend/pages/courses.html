@@ -3,1256 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses - RID GATE</title>
+    <title>Courses - CodeElite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --primary-light: #a78bfa;
-            --secondary: #0f172a;
-            --accent: #06d6a0;
-            --accent-dark: #05c38f;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --dark: #1e293b;
-            --dark-light: #334155;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--secondary);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-        
-        /* Header Styles */
-        header {
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            margin-left: 10px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .logo-icon {
-            color: var(--primary);
-            font-size: 2rem;
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-        
-        nav ul li {
-            margin-left: 1.8rem;
-            position: relative;
-        }
-        
-        nav ul li a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            font-size: 1rem;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-        
-        nav ul li a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            transition: width 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: var(--primary-light);
-        }
-        
-        nav ul li a:hover:after {
-            width: 100%;
-        }
-        
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.7rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .btn:hover:before {
-            left: 100%;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .btn-accent {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            color: white;
-            box-shadow: 0 4px 15px rgba(6, 214, 160, 0.3);
-        }
-        
-        .btn-accent:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 214, 160, 0.4);
-        }
-        
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background: #0da271;
-            transform: translateY(-2px);
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--light);
-            cursor: pointer;
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 99;
-            padding: 20px;
-            flex-direction: column;
-            gap: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .mobile-menu.active {
-            display: flex;
-        }
-
-        .mobile-menu a {
-            text-decoration: none;
-            color: var(--light);
-            font-weight: 500;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .mobile-menu a:last-child {
-            border-bottom: none;
-        }
-
-        /* Main Layout */
-        .page {
-            display: flex;
-            min-height: calc(100vh - 70px);
-            gap: 30px;
-            padding: 30px 0;
-        }
-
-        /* Sidebar Styles */
-        .sidebar-left {
-            width: 280px;
-            background: rgba(30, 41, 59, 0.7);
-            color: white;
-            padding: 25px 20px;
-            height: fit-content;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .brand {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 40px;
-            text-align: center;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .brand a {
-            text-decoration: none;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .brand i {
-            color: var(--accent);
-        }
-
-        .sidebar-left h3 {
-            margin: 25px 0 15px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent);
-        }
-
-        .sidebar-left h3 i {
-            color: var(--accent);
-        }
-
-        .sidebar-left ul {
-            list-style: none;
-        }
-
-        .sidebar-left li {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .sidebar-left li:hover {
-            background: rgba(139, 92, 246, 0.1);
-            transform: translateX(5px);
-        }
-
-        .sidebar-left li.active {
-            background: rgba(139, 92, 246, 0.2);
-            font-weight: 600;
-            color: var(--primary-light);
-        }
-
-        .sidebar-left li i {
-            width: 20px;
-            text-align: center;
-        }
-
-        /* Main Content Styles */
-        .main-col {
-            flex: 1;
-            padding: 0 0 30px 0;
-        }
-
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        h1 {
-            color: var(--light);
-            font-size: 2.2rem;
-            position: relative;
-            padding-bottom: 10px;
-            font-weight: 700;
-        }
-
-        h1:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .search-row {
-            display: flex;
-            margin-bottom: 30px;
-            gap: 10px;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 5px;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .search-row input {
-            flex: 1;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            outline: none;
-            background: transparent;
-            color: var(--light);
-        }
-
-        .search-row input::placeholder {
-            color: var(--gray);
-        }
-
-        /* Card Grid Styles */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 50px;
-        }
-
-        .card {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border-color: rgba(139, 92, 246, 0.3);
-        }
-
-        .card-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-            box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
-        }
-
-        .card-img {
-            height: 180px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 1.8rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card h3 {
-            color: var(--light);
-            margin-bottom: 10px;
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .card p {
-            color: var(--gray);
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-
-        .card-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-        }
-
-        .card-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .price {
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: var(--accent);
-        }
-
-        .rating {
-            color: var(--warning);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Video Section Styles */
-        .videos-section {
-            margin-top: 50px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .section-header h2 {
-            color: var(--light);
-            font-size: 1.8rem;
-            position: relative;
-            padding-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .section-header h2:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-
-        .view-all {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            transition: all 0.3s;
-        }
-
-        .view-all:hover {
-            color: var(--accent);
-            gap: 10px;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .video-card {
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.4s;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border-color: rgba(139, 92, 246, 0.3);
-        }
-
-        .video-thumbnail {
-            position: relative;
-            height: 160px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: all 0.4s;
-        }
-
-        .video-card:hover .video-thumbnail img {
-            transform: scale(1.05);
-        }
-
-        .play-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(139, 92, 246, 0.8);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            opacity: 0;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .video-thumbnail:hover .play-icon {
-            opacity: 1;
-        }
-
-        .duration {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .video-content {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .video-content h3 {
-            font-size: 1rem;
-            margin-bottom: 8px;
-            color: var(--light);
-            line-height: 1.4;
-            flex-grow: 1;
-            font-weight: 600;
-        }
-
-        .video-meta {
-            display: flex;
-            justify-content: space-between;
-            color: var(--gray);
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-        }
-
-        .video-views {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .video-price {
-            font-weight: 700;
-            color: var(--accent);
-            margin-top: 5px;
-            font-size: 1.2rem;
-        }
-
-        /* Stats Section */
-        .stats-section {
-            display: flex;
-            justify-content: space-around;
-            background: rgba(30, 41, 59, 0.7);
-            border-radius: 16px;
-            padding: 25px;
-            margin: 40px 0;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 1024px) {
-            .page {
-                flex-direction: column;
-            }
-            
-            .sidebar-left {
-                width: 100%;
-                position: static;
-            }
-            
-            .card-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-
-            nav ul {
-                display: none;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-section {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .search-row {
-                width: 100%;
-            }
-            
-            .stats-section {
-                flex-wrap: wrap;
-                gap: 20px;
-            }
-            
-            .stat-item {
-                flex: 1 1 40%;
-            }
-
-            .header-content {
-                flex-wrap: wrap;
-            }
-
-            .auth-buttons {
-                margin-top: 10px;
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .user-profile span {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-grid, .video-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stat-item {
-                flex: 1 1 100%;
-            }
-
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-out;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <!-- Header Navigation -->
+    <!-- Header -->
     <header>
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-graduation-cap logo-icon"></i>
-                    <h1>RID GATE</h1>
+                    <span class="logo-icon"><i class="fas fa-graduation-cap"></i></span>
+                    <h1>CodeElite</h1>
                 </div>
-          
-                
-                
                 <nav>
                     <ul>
-                        <li><a href="../index.html" class="active"><i class="fas fa-home"></i> Home</a></li>
-                        <li><a href="#"><i class="fas fa-book-open"></i> Courses</a></li>
-                        <li><a href="#"><i class="fas fa-video"></i> Videos</a></li>
+                        <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="courses.html" class="active"><i class="fas fa-book-open"></i> Courses</a></li>
                         <li><a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a></li>
-                        <li><a href="#"><i class="fas fa-briefcase"></i> Careers</a></li>
+                        <li><a href="videos.html"><i class="fas fa-video"></i> Videos</a></li>
+                        <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                        <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
                     </ul>
                 </nav>
-                
                 <div class="auth-buttons">
-                    <button class="btn btn-primary"><i class="fas fa-bell"></i></button>
-                    <div class="user-profile">
-                        <div class="user-avatar">AS</div>
-                        <span>Ankit Sharma</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <button class="mobile-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
+                    <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="signup.html" class="btn btn-primary"><i class="fas fa-user-plus"></i> Sign Up</a>
                 </div>
-            </div>
-            
-            <!-- Mobile Menu -->
-            <div class="mobile-menu" id="mobileMenu">
-                <a href="#" class="active"><i class="fas fa-home"></i> Home</a>
-                <a href="#"><i class="fas fa-book-open"></i> Courses</a>
-                <a href="#"><i class="fas fa-video"></i> Videos</a>
-                <a href="#"><i class="fas fa-chalkboard-teacher"></i> Instructors</a>
-                <a href="#"><i class="fas fa-briefcase"></i> Careers</a>
-                <a href="#"><i class="fas fa-user"></i> Profile</a>
-                <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        <div class="page">
-            <aside class="sidebar-left">
-                <div class="brand"><a href="/"><i class="fas fa-graduation-cap"></i> RID bharat</a></div>
-                <h3><i class="fas fa-list"></i> Categories</h3>
-                <ul id="category-list">
-                    <li class="active"><i class="fas fa-laptop-code"></i> Web Development</li>
-                    <li><i class="fas fa-chart-line"></i> Data Science</li>
-                    <li><i class="fas fa-mobile-alt"></i> Mobile Development</li>
-                    <li><i class="fas fa-cloud"></i> Cloud Computing</li>
-                    <li><i class="fas fa-shield-alt"></i> Cybersecurity</li>
-                    <li><i class="fas fa-robot"></i> AI & Machine Learning</li>
-                    <li><i class="fas fa-database"></i> Database Management</li>
-                    <li><i class="fas fa-gamepad"></i> Game Development</li>
-                </ul>
-                
-                <h3><i class="fas fa-filter"></i> Filters</h3>
-                <ul>
-                    <li><i class="far fa-clock"></i> Beginner Level</li>
-                    <li><i class="fas fa-clock"></i> Intermediate Level</li>
-                    <li><i class="fas fa-star"></i> Advanced Level</li>
-                    <li><i class="fas fa-certificate"></i> Certified Courses</li>
-                </ul>
-            </aside>
-            
-            <main class="main-col">
-                <div class="header-section">
-                    <h1>All Courses</h1>
-                    <button class="btn btn-accent"><i class="fas fa-plus"></i> New Course</button>
+    <!-- Courses Section -->
+    <section class="hero" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 140px 0 60px; margin-top: 80px;">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Explore Our Courses</h2>
+                <p>Discover comprehensive video courses to advance your technical skills</p>
+                <div class="hero-buttons">
+                    <a href="#courses" class="btn btn-primary"><i class="fas fa-search"></i> Browse All</a>
+                    <a href="#categories" class="btn btn-outline"><i class="fas fa-filter"></i> Filter by Category</a>
                 </div>
-                
-                <div class="search-row">
-                    <input id="q" placeholder="Search courses, videos, or topics..." />
-                    <button id="searchBtn" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
-                </div>
-                
-                <div class="stats-section">
-                    <div class="stat-item">
-                        <div class="stat-number">128</div>
-                        <div class="stat-label">Total Courses</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">56</div>
-                        <div class="stat-label">Video Tutorials</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24</div>
-                        <div class="stat-label">Expert Instructors</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">5,280</div>
-                        <div class="stat-label">Active Students</div>
-                    </div>
-                </div>
-                
-                <div id="courses-grid" class="card-grid">
-                    <!-- Course cards will be populated by JavaScript -->
-                </div>
-                
-                <!-- Technical Videos Section -->
-                <section class="videos-section">
-                    <div class="section-header">
-                        <h2>Technical Video Tutorials</h2>
-                        <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div id="videos-grid" class="video-grid">
-                        <!-- Video cards will be populated by JavaScript -->
-                    </div>
-                </section>
-            </main>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Sample course data
-        const courses = [
-            {
-                id: 1,
-                title: "JavaScript Fundamentals",
-                description: "Learn the core concepts of JavaScript programming from scratch with hands-on projects",
-                image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "8 weeks",
-                level: "Beginner",
-                price: "$49.99",
-                rating: 4.8,
-                badge: "Popular"
-            },
-            {
-                id: 2,
-                title: "React Masterclass",
-                description: "Build modern web applications with React and Redux. Includes real-world projects",
-                image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "10 weeks",
-                level: "Intermediate",
-                price: "$79.99",
-                rating: 4.9,
-                badge: "Hot"
-            },
-            {
-                id: 3,
-                title: "Node.js Backend Development",
-                description: "Create scalable server-side applications with Node.js and Express framework",
-                image: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "12 weeks",
-                level: "Advanced",
-                price: "$89.99",
-                rating: 4.7,
-                badge: "New"
-            },
-            {
-                id: 4,
-                title: "Python for Data Science",
-                description: "Data analysis and visualization with Python libraries like Pandas and Matplotlib",
-                image: "https://images.unsplash.com/photo-1526379879527-8559ecfcaec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "10 weeks",
-                level: "Intermediate",
-                price: "$69.99",
-                rating: 4.6,
-                badge: ""
-            },
-            {
-                id: 5,
-                title: "AWS Cloud Practitioner",
-                description: "Fundamentals of Amazon Web Services cloud platform and deployment strategies",
-                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "6 weeks",
-                level: "Beginner",
-                price: "$59.99",
-                rating: 4.5,
-                badge: "Bestseller"
-            },
-            {
-                id: 6,
-                title: "Mobile App Development with Flutter",
-                description: "Build cross-platform mobile apps with Flutter framework and Dart programming",
-                image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "14 weeks",
-                level: "Intermediate",
-                price: "$74.99",
-                rating: 4.7,
-                badge: ""
-            }
-        ];
+    <!-- Categories Filter -->
+    <section class="container" id="categories">
+        <div class="section-title">
+            <h2>Course Categories</h2>
+            <p>Filter courses by your area of interest</p>
+        </div>
+        <div class="categories">
+            <div class="category-card" data-category="javascript">
+                <div class="category-icon"><i class="fab fa-js-square"></i></div>
+                <h3>JavaScript</h3>
+            </div>
+            <div class="category-card" data-category="python">
+                <div class="category-icon"><i class="fab fa-python"></i></div>
+                <h3>Python & Data Science</h3>
+            </div>
+            <div class="category-card" data-category="mobile">
+                <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Mobile Development</h3>
+            </div>
+            <div class="category-card" data-category="cybersecurity">
+                <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Cybersecurity</h3>
+            </div>
+            <div class="category-card" data-category="react">
+                <div class="category-icon"><i class="fab fa-react"></i></div>
+                <h3>React & Frontend</h3>
+            </div>
+            <div class="category-card" data-category="cloud">
+                <div class="category-icon"><i class="fas fa-cloud"></i></div>
+                <h3>Cloud Computing</h3>
+            </div>
+        </div>
+    </section>
 
-        // Sample video data with prices
-        const videos = [
-            {
-                id: 1,
-                title: "Getting Started with React Hooks - Complete Tutorial",
-                thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "15:30",
-                views: "12K",
-                date: "2 days ago",
-                price: "$9.99"
-            },
-            {
-                id: 2,
-                title: "Python List Comprehensions Explained with Examples",
-                thumbnail: "https://images.unsplash.com/photo-1526379879527-8559ecfcaec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "10:45",
-                views: "8.5K",
-                date: "1 week ago",
-                price: "$7.99"
-            },
-            {
-                id: 3,
-                title: "CSS Grid Layout Tutorial - Build Modern Websites",
-                thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "22:10",
-                views: "15.2K",
-                date: "3 days ago",
-                price: "$12.99"
-            },
-            {
-                id: 4,
-                title: "Introduction to Docker Containers for Beginners",
-                thumbnail: "https://images.unsplash.com/photo-1626710550228-17af9de58c1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "18:25",
-                views: "9.7K",
-                date: "5 days ago",
-                price: "$10.99"
-            },
-            {
-                id: 5,
-                title: "JavaScript Async/Await Patterns for Clean Code",
-                thumbnail: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "14:50",
-                views: "11.3K",
-                date: "4 days ago",
-                price: "$8.99"
-            },
-            {
-                id: 6,
-                title: "Building REST APIs with Express.js - Full Guide",
-                thumbnail: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-                duration: "26:40",
-                views: "7.8K",
-                date: "2 weeks ago",
-                price: "$14.99"
-            }
-        ];
+    <!-- All Courses -->
+    <section class="container" id="courses">
+        <div class="section-title">
+            <h2>All Video Courses</h2>
+            <p>Hand-picked courses to boost your technical skills</p>
+        </div>
+        <div class="courses-grid" id="coursesGrid">
+            <!-- Courses will be loaded dynamically -->
+        </div>
+    </section>
 
-        // Function to render courses
-        function renderCourses() {
-            const coursesGrid = document.getElementById('courses-grid');
-            coursesGrid.innerHTML = '';
-            
-            courses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.className = 'card fade-in';
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CodeElite</h3>
+                    <p>Your gateway to mastering technical skills through high-quality video courses.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
                 
-                let badgeHTML = '';
-                if (course.badge) {
-                    badgeHTML = `<div class="card-badge">${course.badge}</div>`;
-                }
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="courses.html"><i class="fas fa-chevron-right"></i> All Courses</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Become an Instructor</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing Plans</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+                    </ul>
+                </div>
                 
-                courseCard.innerHTML = `
-                    ${badgeHTML}
-                    <img src="${course.image}" alt="${course.title}" class="card-img">
-                    <div class="card-content">
-                        <h3>${course.title}</h3>
-                        <p>${course.description}</p>
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> ${course.duration}</span>
-                            <span><i class="fas fa-signal"></i> ${course.level}</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="price">${course.price}</div>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> ${course.rating}
-                            </div>
-                        </div>
-                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-shopping-cart"></i> Buy Now
-                        </button>
-                    </div>
-                `;
-                coursesGrid.appendChild(courseCard);
-            });
-        }
-
-        // Function to render videos
-        function renderVideos() {
-            const videosGrid = document.getElementById('videos-grid');
-            videosGrid.innerHTML = '';
-            
-            videos.forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card fade-in';
-                videoCard.innerHTML = `
-                    <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.title}">
-                        <div class="play-icon">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="duration">${video.duration}</div>
-                    </div>
-                    <div class="video-content">
-                        <h3>${video.title}</h3>
-                        <div class="video-meta">
-                            <span class="video-views"><i class="far fa-eye"></i> ${video.views}</span>
-                            <span>${video.date}</span>
-                        </div>
-                        <div class="video-price">${video.price}</div>
-                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-shopping-cart"></i> Buy Video
-                        </button>
-                    </div>
-                `;
-                videosGrid.appendChild(videoCard);
-            });
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCourses();
-            renderVideos();
-            
-            // Mobile menu toggle
-            const mobileToggle = document.querySelector('.mobile-toggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            
-            mobileToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-            });
-            
-            // Close mobile menu when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.auth-buttons') && !e.target.closest('.mobile-menu')) {
-                    mobileMenu.classList.remove('active');
-                }
-            });
-            
-            // Add search functionality
-            document.getElementById('searchBtn').addEventListener('click', performSearch);
-            document.getElementById('q').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    performSearch();
-                }
-            });
-            
-            // Add category selection
-            const categoryItems = document.querySelectorAll('.sidebar-left li');
-            categoryItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    categoryItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-
-            // Add Buy Now button functionality for courses and videos
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.btn-success')) {
-                    const card = e.target.closest('.card, .video-card');
-                    const title = card.querySelector('h3').textContent;
-                    const price = card.querySelector('.price, .video-price').textContent;
-                    
-                    if (card.classList.contains('card')) {
-                        alert(`Thank you for your interest in "${title}"! Price: ${price}. You will be redirected to the checkout page.`);
-                    } else {
-                        alert(`Thank you for your interest in "${title}" video! Price: ${price}. You will be redirected to the checkout page.`);
-                    }
-                }
-            });
-        });
-
-        // Search function
-        function performSearch() {
-            const searchTerm = document.getElementById('q').value.toLowerCase();
-            
-            if (searchTerm.trim() === '') {
-                renderCourses();
-                renderVideos();
-                return;
-            }
-            
-            const filteredCourses = courses.filter(course => 
-                course.title.toLowerCase().includes(searchTerm) || 
-                course.description.toLowerCase().includes(searchTerm)
-            );
-            
-            const filteredVideos = videos.filter(video => 
-                video.title.toLowerCase().includes(searchTerm)
-            );
-            
-            const coursesGrid = document.getElementById('courses-grid');
-            coursesGrid.innerHTML = '';
-            
-            if (filteredCourses.length === 0 && filteredVideos.length === 0) {
-                coursesGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--gray);">No courses or videos found matching your search.</p>';
-                return;
-            }
-            
-            // Render filtered courses
-            filteredCourses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.className = 'card fade-in';
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+                    </ul>
+                </div>
                 
-                let badgeHTML = '';
-                if (course.badge) {
-                    badgeHTML = `<div class="card-badge">${course.badge}</div>`;
-                }
-                
-                courseCard.innerHTML = `
-                    ${badgeHTML}
-                    <img src="${course.image}" alt="${course.title}" class="card-img">
-                    <div class="card-content">
-                        <h3>${course.title}</h3>
-                        <p>${course.description}</p>
-                        <div class="card-meta">
-                            <span><i class="far fa-clock"></i> ${course.duration}</span>
-                            <span><i class="fas fa-signal"></i> ${course.level}</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="price">${course.price}</div>
-                            <div class="rating">
-                                <i class="fas fa-star"></i> ${course.rating}
-                            </div>
-                        </div>
-                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-shopping-cart"></i> Buy Now
-                        </button>
-                    </div>
-                `;
-                coursesGrid.appendChild(courseCard);
-            });
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-envelope"></i> support@codeelite.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +1 (555) 123-4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Tech Street, San Francisco, CA</a></li>
+                    </ul>
+                </div>
+            </div>
             
-            // Update video section with filtered results
-            const videosGrid = document.getElementById('videos-grid');
-            videosGrid.innerHTML = '';
-            
-            filteredVideos.forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card fade-in';
-                videoCard.innerHTML = `
-                    <div class="video-thumbnail">
-                        <img src="${video.thumbnail}" alt="${video.title}">
-                        <div class="play-icon">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="duration">${video.duration}</div>
-                    </div>
-                    <div class="video-content">
-                        <h3>${video.title}</h3>
-                        <div class="video-meta">
-                            <span class="video-views"><i class="far fa-eye"></i> ${video.views}</span>
-                            <span>${video.date}</span>
-                        </div>
-                        <div class="video-price">${video.price}</div>
-                        <button class="btn btn-success" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-shopping-cart"></i> Buy Video
-                        </button>
-                    </div>
-                `;
-                videosGrid.appendChild(videoCard);
-            });
-        }
-    </script>
+            <div class="copyright">
+                <p>&copy; 2023 CodeElite. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
 </body>
 </html>
